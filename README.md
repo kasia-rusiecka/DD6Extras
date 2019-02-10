@@ -1,6 +1,6 @@
 # DD6Extras
 
-This is collection of [ROOT] (https://root.cern/) macros and C++ programs complementary with the [DeskktopDigitizer6] (https://github.com/kasia-rusiecka/DesktopDigitizer6) project and useful for preliminary analysis of data recorded with the CAEN Desktop Digitizer.
+This is collection of [ROOT](https://root.cern/) macros and C++ programs complementary with the [DesktopDigitizer6](https://github.com/kasia-rusiecka/DesktopDigitizer6) project and useful for preliminary analysis of data recorded with the CAEN Desktop Digitizer.
 
 ## Prerequisites 
 * Required ROOT version 6.13/01
