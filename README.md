@@ -21,6 +21,20 @@ description
 ### calibrate.C
 description
 
-### attFast.C
-description
+### AttFast.C
+
+ROOT macro for fast determination of attenuation length. As an argument takes name of the logfile containing names of the measurements and corresponding source positions. Determines attenuation length with two methods:
+1. Combined channels - based on charge ratio from both channels,
+2. Separate channels - approximated, based on position of the 511 keV peak, but not  background-subtracted. Peaks positions are determined with TSpectrum.
+Created canvases:
+1. All charge spectra from this measurements
+2. Ratio histograms
+3. Attenuation graphs and curves, both methods
+
+To run type:
+```
+root
+.L Att.Fast.C
+AttFast("logfile.txt")
+```
 
