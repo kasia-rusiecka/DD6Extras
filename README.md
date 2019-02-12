@@ -18,8 +18,19 @@ description
 ### BaseLine.C
 description
 
-### calibrate.C
-description
+### Calibrate.C
+
+Runs digitization/calibration of the whole measurement series. Logfile containing list of measurement names and corresponding source positions is opened. Digitization is performed for the measurements included in this logfile. For each measurement program digit (part of  the DesktopDigitizer6) is executed, so correct configuration files config.txt should be provided. 
+
+To compile type:
+```
+gcc Calibrate.C -lstdc++
+```
+
+To run type:
+```
+./Calibrate.o path/to/log.txt
+```
 
 ### AttFast.C
 
