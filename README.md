@@ -22,7 +22,7 @@ Unix.*.Root.MacroPath:      .:$(HOME)/Macros:/path/to/this/project:
 ROOT script for fast viewing of signals recorded by the Desktop Digitizer. Opens binary files recorded by the Desktop Digitizer, reads them and fills histograms. Signals are plotted on the canvas with the WaitPrimitive() method, so to see next signal double-click on the canvas is required. Script should be run in the directory where data is stored. Binary data is sufficient for SignalsViewer() functions, data doesn't have to be digitized. Function CutAndView() requires digitized data in order to impose demanded cuts. Three functions are implememnted within this macro:
 1. `SignalsViewer(Int_t ch0, Int_t ch1, Int_t ylimit, Bool_t BL)` Draws correlated signals from two chosen channels `ch0` and `ch1`. 
 2. `SignalsViewer(Int_t ch, Bool_t BL)` Draws a signal from a chosen channel `ch`.
-3. `CutAndView(Int_t ch, TString mode, Double_t xmin, Double_t xmax, Int_t no)` Allows to view specific signals, selected based on the cut on signal amplitude (fAmp), uncalibrated integral (fCharge), calibrated integral (fCal) or time T0 (fT0). Cut ranges are given as xmin and xmax. `no` signals are drawn on the divided canvas.
+3. `CutAndView(Int_t ch, TString mode, Double_t xmin, Double_t xmax, Int_t no)` Allows to view specific signals, selected based on the cut on signal amplitude (fAmp), uncalibrated integral (fCharge), calibrated integral (fPE) or time T0 (fT0). Cut ranges are given as xmin and xmax. `no` signals are drawn on the divided canvas.
 
 If .rootrc file is setup correctly this macro will be loaded in ROOT session automatically and all functions will be available in data directories.
 
