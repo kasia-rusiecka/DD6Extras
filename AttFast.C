@@ -59,11 +59,14 @@ bool AttFast(TString conf_name, Bool_t calib=0){
   
   while(config.good()){
     getline(config,line);
+    getline(config,line);
+    getline(config,line);
     config >> dir_names[npoints];
     config >> dummy >> dummy >> positions[npoints];
     std::cout << dir_names[npoints] << "\t" << positions[npoints] << std::endl;
     getline(config,line);
     getline(config,line);
+    std::cout << dir_names[npoints] << "\t" << positions[npoints] << std::endl;
     npoints++;
   }
   
@@ -89,8 +92,8 @@ bool AttFast(TString conf_name, Bool_t calib=0){
       tree->Draw(Form("ch_1.fPE>>htemp_ch1%i(1000,0,2E3)",i));
     }
     else{
-      tree->Draw(Form("ch_0.fPE>>htemp_ch0%i(1000,0,200E3)",i));
-      tree->Draw(Form("ch_1.fPE>>htemp_ch1%i(1000,0,200E3)",i));
+      tree->Draw(Form("ch_0.fPE>>htemp_ch0%i(1000,0,150E3)",i));
+      tree->Draw(Form("ch_1.fPE>>htemp_ch1%i(1000,0,150E3)",i));
     }
     tree->Draw(Form("log(sqrt(ch_1.fPE/ch_0.fPE))>>htemp_rat%i(500,-2.5,2.5)",i));
     hch0.push_back((TH1D*)gROOT->FindObjectAny(Form("htemp_ch0%i",i))->Clone(Form("hch0_%.2f",positions[i])));
@@ -130,7 +133,9 @@ bool AttFast(TString conf_name, Bool_t calib=0){
   fpol1->SetParameters(-0.1,1E-3);
   gatt_average->Fit("fpol1","RQ");
   
-  std::cout << "Attenuation length (averaged channels): " << 1./fpol1->GetParameter(1) << " mm" << std::endl;
+  std::cout << "Attenuation length (averaged channels): " << 1./fpol1->GetParameter(1) 
+            << " mm" << " +/- " << fpol1->GetParError(1)/pow(fpol1->GetParameter(1),2) 
+            << " mm" << std::endl;
   
   //----- Drawing charge spectra 
   TCanvas *can_spectra = new TCanvas("can_spectra","can_spectra",1200,1200);
