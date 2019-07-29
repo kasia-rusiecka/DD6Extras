@@ -83,18 +83,18 @@ bool DrawTemp(TString log_name, bool save){
     
     TString root_fname = string(dataPath)+"temp_logs/"+log_name_short+".root";
     cout << root_fname << endl;
-    TFile *file = new TFile(root_fname,"RECREATE");
+    TFile *file;
     
     if(save){
+      file = new TFile(root_fname,"RECREATE");  
       gTemp[0]->Write();
       gTemp[1]->Write();
       gTemp[2]->Write();
       gTemp[3]->Write();
       can->Write();
+      file->Close();
+      can->SaveAs("temperature.png");
     }
-    
-    can->SaveAs("temperature.png");
-    file->Close();
     
     return true;
 }
