@@ -10,7 +10,11 @@
 // ROOT macro for fast determination of attenuation length.
 // As an argument takes name of the logfile containing 
 // names of the mesurements and corresponding source 
-// positions. Determines attenuation length with two methods:
+// positions and calibration flag. If measurements are 
+// correctly calibrated flag 1 (TRUE) should be passed. 
+// Otherwise uncalibrated charge will be taken into account.
+// Default value for the flag is 0/FALSE. Determines 
+// attenuation length with two methods:
 // (1) Combined channels - based on charge ratio from both
 // channels
 // (2) Separate channels - approximated, based on position of
@@ -33,7 +37,7 @@
 #include <stdlib.h>
 #include "TString.h"
 
-bool AttFast(TString conf_name){
+bool AttFast(TString conf_name, Bool_t calib=0){
   
   const char *dataPath = std::getenv("SFDATA");  // directory where data is stored
   const double offset = 12.4;                    // source position offset [mm]
@@ -80,9 +84,15 @@ bool AttFast(TString conf_name){
      return false;
     }
     tree = (TTree*)file->Get("tree_ft");
-    tree->Draw(Form("ch_0.fCal>>htemp_ch0%i(1000,0,2E3)",i));
-    tree->Draw(Form("ch_1.fCal>>htemp_ch1%i(1000,0,2E3)",i));
-    tree->Draw(Form("log(sqrt(ch_1.fCal/ch_0.fCal))>>htemp_rat%i(500,-2.5,2.5)",i));
+    if(calib){
+      tree->Draw(Form("ch_0.fPE>>htemp_ch0%i(1000,0,2E3)",i));
+      tree->Draw(Form("ch_1.fPE>>htemp_ch1%i(1000,0,2E3)",i));
+    }
+    else{
+      tree->Draw(Form("ch_0.fPE>>htemp_ch0%i(1000,0,200E3)",i));
+      tree->Draw(Form("ch_1.fPE>>htemp_ch1%i(1000,0,200E3)",i));
+    }
+    tree->Draw(Form("log(sqrt(ch_1.fPE/ch_0.fPE))>>htemp_rat%i(500,-2.5,2.5)",i));
     hch0.push_back((TH1D*)gROOT->FindObjectAny(Form("htemp_ch0%i",i))->Clone(Form("hch0_%.2f",positions[i])));
     hch1.push_back((TH1D*)gROOT->FindObjectAny(Form("htemp_ch1%i",i))->Clone(Form("hch1_%.2f",positions[i])));
     hrat.push_back((TH1D*)gROOT->FindObjectAny(Form("htemp_rat%i",i))->Clone(Form("ratio_%.2f",positions[i])));
