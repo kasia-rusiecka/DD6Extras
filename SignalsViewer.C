@@ -24,7 +24,7 @@
 // Draws a signal from a chosen channel ch.
 // (3) CutAndView(Int_t ch, TString mode, Double_t xmin, Double_t xmax, Int_t no)
 // Allows to view specific signals, selected based on the cut on signal amplitude
-// (fAmp), uncalibrated integral (fCharge), calibrated integral (fCal) or time T0 (fT0).
+// (fAmp), uncalibrated integral (fCharge), calibrated integral (fPE) or time T0 (fT0).
 // Cut ranges are given as xmin and xmax.
 
 // If .rootrc file is setup correctly this macro will be loaded in ROOT session
@@ -190,7 +190,7 @@ Bool_t SignalsViewer(Int_t ch, Bool_t BL_flag){
 // Arguments:
 // ch - channel number
 // mode - selection for signals viewing; available options: fAmp, 
-// fCharge, fCal, fT0.
+// fCharge, fPE, fT0.
 // xmin - lower cut for signals viewing
 // xmax - upper cut for signals viewing
 // no - number of signals
@@ -279,8 +279,8 @@ Bool_t CutAndView(Int_t ch, TString mode, Double_t xmin, Double_t xmax, Int_t no
            break;
        }
      }
-     else if(mode == "fCal"){                                  // selection of signals of specific charge (calibrated)
-       if(sig->GetCalibrated()>xmin && sig->GetCalibrated()<xmax){
+     else if(mode == "fPE"){                                  // selection of signals of specific charge (calibrated)
+       if(sig->GetPE()>xmin && sig->GetPE()<xmax){
          input.clear();
          input.seekg(0,std::ios::beg);
          input.seekg(sizeof(x)*ipoints*i);
@@ -328,7 +328,7 @@ Bool_t CutAndView(Int_t ch, TString mode, Double_t xmin, Double_t xmax, Int_t no
        }
      }
      else{
-       std::cout << "##### Unknown mode! Possible versions are: fAmp, fCharge, fCal, fT0" << std::endl;  
+       std::cout << "##### Unknown mode! Possible versions are: fAmp, fCharge, fPE, fT0" << std::endl;  
        return kFALSE;
      }
   }
